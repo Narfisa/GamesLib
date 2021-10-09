@@ -1,0 +1,27 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.App-header{
+  margin-top: 2vh;  
+  margin-bottom: 5vh;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+}
+
+.noList-text{
+  font-size: 1.5em;
+  margin-top: 15vh;
+  text-align: center;
+}
+
+.noList-buttons{
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}

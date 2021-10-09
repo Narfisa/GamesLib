@@ -1,0 +1,10 @@
+.MuiImageList-root{
+    margin: 0 auto;
+    width: 70vw;
+    height: auto;
+}
+
+.css-pxxd1-MuiImageListItem-root:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
