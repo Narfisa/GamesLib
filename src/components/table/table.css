@@ -8,3 +8,11 @@
     cursor: pointer;
     opacity: 0.8;
 }
+.css-pxxd1-MuiImageListItem-root:onkeydown{
+    cursor: grab;
+    opacity: 0.8;
+}
+
+.MuiImageListItem-root{
+    border: 1px solid black;
+}

@@ -11,7 +11,10 @@ function App() {
   function load(){
     axios.get(URL)
     .then((response) => {
-      setGames(response.data.data);
+      let games = response.data.data.map((game, index) => {
+        return {...game, id: index, pos: index}
+      })
+      setGames(games);
     })
     .catch((error) => {
       console.log(error);
