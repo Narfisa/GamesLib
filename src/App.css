@@ -25,3 +25,18 @@
   width: 100%;
   height: auto;
 }
+
+.deleteDrop{
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 65vw;
+  background-color: #B2EBF2;
+  border: 3px dashed #26C6DA;
+}
+
+.redBin{
+  width: 64px;
+}
