@@ -26,8 +26,10 @@ function App() {
   };
 
   function deleteGame(e){
-    setGames(games.splice(deletingGame.id, 1));
-    console.log(games)
+    setDragOver(false);
+    let index = games.findIndex(item => item.id === deletingGame.id)
+    games.splice(index,1)
+    setGames([...games]);
     setDeletingGame(null);
   }
 
@@ -61,7 +63,7 @@ function App() {
         onDragLeave={(e) => deleteDragLeave(e)} 
         onDragEnd={(e) => deleteDragEnd(e)}
         > 
-          { dragOver ? <img src={redBin} alt="red trash" className="redBin"/> : <span> Переместите сюда игру чтобы удалить </span>}
+          { dragOver ? <img src={redBin} alt="red trash" className="redBin"/> : <span className="deleteText"> Переместите сюда игру чтобы удалить </span>}
         </div>
       }
       { games ? <Table key={games} data={games} setDeletingGame={setDeletingGame} setData={setGames} currentGame={deletingGame} setCurrentGame={setDeletingGame}/> :

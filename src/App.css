@@ -27,7 +27,7 @@
 }
 
 .deleteDrop{
-  padding: 40px;
+  padding: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,4 +39,8 @@
 
 .redBin{
   width: 64px;
+}
+
+.deleteText{
+  font-size: 1.2em;
 }

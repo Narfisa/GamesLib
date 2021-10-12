@@ -10,7 +10,6 @@ export default function Table(props) {
   }
 
   function dragStart(e, item){
-    e.stopPropagation()
     props.setDeletingGame(item);
   }
 
@@ -48,9 +47,9 @@ export default function Table(props) {
 
   return (
     <>
-        { props.data && <ImageList cols={4} gap={10}> 
-            { props.data.map((item, index) => (
-                <ImageListItem key={index} onClick={() => imgClick(item.icon_url)} 
+        { props.data && <ImageList cols={5} gap={10}> 
+            { props.data.sort(sortGames).map((item) => (
+                <ImageListItem key={item.icon_url} onClick={() => imgClick(item.icon_url)} 
                 draggable={true}
                 onDragStart={(e) => dragStart(e,item)}
                 onDragLeave={(e) => dragEnd(e)}
