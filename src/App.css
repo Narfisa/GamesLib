@@ -44,3 +44,14 @@
 .deleteText{
   font-size: 1.2em;
 }
+
+.table-root{  
+  margin: 0 auto;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.abc{
+  margin-left: auto;
+}

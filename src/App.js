@@ -1,6 +1,7 @@
 import './App.css';
 import * as React from 'react';
 import Table from './components/table/table';
+import SortSelect from './components/sortSelect/sortSelect';
 import Button from '@mui/material/Button';
 import redBin from './icons/red bin.png'
 
@@ -51,22 +52,48 @@ function App() {
     e.target.style.border = "3px dashed #26C6DA";
   }
 
+  function handleSort(value){
+    let arr = games;
+    if (value === 'DESC'){
+      arr.sort(function (a,b) {
+        if (a.name.toLowerCase() > b.name.toLowerCase()) {
+          return -1
+        }
+        return 1
+      })
+    } else {
+      arr.sort(function (a,b) {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1
+        }
+        return 1
+      });
+    }
+    arr = arr.map((item, index) => {
+      return {...item, pos: index};
+    });
+    setGames([...arr]);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <p> GamesLib </p>
       </header>
-      { deletingGame &&  
-        <div className="deleteDrop" 
-        onDrop={(e) => deleteGame(e)} 
-        onDragOver={(e) => deleteDragOver(e)} 
-        onDragLeave={(e) => deleteDragLeave(e)} 
-        onDragEnd={(e) => deleteDragEnd(e)}
-        > 
-          { dragOver ? <img src={redBin} alt="red trash" className="redBin"/> : <span className="deleteText"> Переместите сюда игру чтобы удалить </span>}
-        </div>
-      }
-      { games ? <Table key={games} data={games} setDeletingGame={setDeletingGame} setData={setGames} currentGame={deletingGame} setCurrentGame={setDeletingGame}/> :
+      { games ? <div className="table-root">
+          <div className="abc"> <SortSelect sortList={handleSort} className="sortSelect"/> </div>
+          { deletingGame &&  
+          <div className="deleteDrop" 
+          onDrop={(e) => deleteGame(e)} 
+          onDragOver={(e) => deleteDragOver(e)} 
+          onDragLeave={(e) => deleteDragLeave(e)} 
+          onDragEnd={(e) => deleteDragEnd(e)}
+          > 
+            { dragOver ? <img src={redBin} alt="red trash" className="redBin"/> : <span className="deleteText"> Переместите сюда игру чтобы удалить </span>}
+          </div>
+          }
+          <Table key={games} data={games} setDeletingGame={setDeletingGame} setData={setGames} currentGame={deletingGame} setCurrentGame={setDeletingGame}/> 
+        </div> :
         <div className="noList-main">
           <p className="noList-text"> У вас еще нет добавленных игр. Нажмите 'Загрузить', чтобы загрузить игры с URL, 
             <br/> или нажмите 'Добавить', чтобы добавить новую игру в ваш список!</p>        
