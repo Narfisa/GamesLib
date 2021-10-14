@@ -49,7 +49,7 @@ export default function Table(props) {
     <>
         { props.data && <ImageList cols={5} gap={10}> 
             { props.data.sort(sortGames).map((item) => (
-                <ImageListItem key={item.icon_url} onClick={() => imgClick(item.icon_url)} 
+                <ImageListItem key={item.id} onClick={() => imgClick(item.icon_url)} 
                 draggable={true}
                 onDragStart={(e) => dragStart(e,item)}
                 onDragLeave={(e) => dragEnd(e)}

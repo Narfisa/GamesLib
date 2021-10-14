@@ -19,11 +19,22 @@
 }
 
 .noList-buttons{
-  margin-top: 5vh;
+  margin-top: 6vh;
+  margin: 6vh auto;
   display: flex;
-  justify-content: center;
-  width: 100%;
-  height: auto;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+.noList-buttons::before{
+  content: "";
+  width: 10vw;
+}
+
+.noList-buttons::after{
+  content: "";
+  width: 10vw;
 }
 
 .deleteDrop{
@@ -52,6 +63,14 @@
   flex-direction: column;
 }
 
-.abc{
-  margin-left: auto;
+
+.table-control{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-control::before{
+  content: "";
+  width: 55vw;
 }

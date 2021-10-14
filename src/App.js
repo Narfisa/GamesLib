@@ -2,6 +2,7 @@ import './App.css';
 import * as React from 'react';
 import Table from './components/table/table';
 import SortSelect from './components/sortSelect/sortSelect';
+import AddDialog from './components/addDialog/addDialog';
 import Button from '@mui/material/Button';
 import redBin from './icons/red bin.png'
 
@@ -12,14 +13,30 @@ function App() {
   const [deletingGame, setDeletingGame] = React.useState(null);
   const URL = 'https://api.npoint.io/35e19105588b7552df5d';
   const [dragOver, setDragOver] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   function load(){
     axios.get(URL)
     .then((response) => {
-      let games = response.data.data.map((game, index) => {
-        return {...game, id: index, pos: index}
-      })
-      setGames(games);
+      let newGames = response.data.data
+      if(!games){
+        newGames = newGames.map((game, index) => {
+          return {...game, id: index, pos: index}
+        })
+        setGames(newGames);
+      } else {
+        let maxPos = games[0].pos;
+        let id = games.length;
+        for (let item of games){
+          if (maxPos < item.pos){
+            maxPos = item.pos
+          }
+        }
+        newGames = newGames.map((game, index) => {
+          return {...game, id: index+id, pos: maxPos+index}
+        })
+        setGames([...games, ...newGames])
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -75,13 +92,48 @@ function App() {
     setGames([...arr]);
   }
 
+  const close = () => {
+    setOpen(false);
+  };
+
+  function handleAdd(){
+    setOpen(true);
+  }
+
+  function add(name, url){
+    let newGame = {
+      icon_url: url,
+      name: name,
+      id: 0,
+      pos: 0
+    };
+    if (games){
+      let maxPos = games[0].pos;
+      for (let item of games){
+        if (maxPos < item.pos){
+          maxPos = item.pos
+        }
+      }
+      newGame.id = games.length;
+      newGame.pos = maxPos+1;
+      setGames([...games, newGame])
+    } else {
+      setGames([newGame])
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <p> GamesLib </p>
       </header>
       { games ? <div className="table-root">
-          <div className="abc"> <SortSelect sortList={handleSort} className="sortSelect"/> </div>
+          <div className="table-control"> 
+            <Button size="large" variant="contained" color="success" onClick={handleAdd} className="addButton">
+              Добавить
+            </Button>
+            <SortSelect sortList={handleSort} className="sortSelect"/> 
+          </div>
           { deletingGame &&  
           <div className="deleteDrop" 
           onDrop={(e) => deleteGame(e)} 
@@ -98,12 +150,16 @@ function App() {
           <p className="noList-text"> У вас еще нет добавленных игр. Нажмите 'Загрузить', чтобы загрузить игры с URL, 
             <br/> или нажмите 'Добавить', чтобы добавить новую игру в ваш список!</p>        
           <div className="noList-buttons">
-            <Button size="large" variant="contained" onClick={load} className="noList-LoadButton">
+            <Button size="large" variant="contained" color="success" onClick={handleAdd} className="noList-addButton">
+              Добавить
+            </Button>
+            <Button size="large" variant="contained" onClick={load} className="noList-loadButton">
               Загрузить
             </Button>
           </div>
         </div>
       }
+      { open && <AddDialog close={close} add={add} isOpen={open}/> }
     </div>
   );
 }
